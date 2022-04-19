@@ -39,3 +39,7 @@ Route::post('/bakcoffice/artists/add-submit', [BOArtistController::class, 'addSu
 Route::get('/bakcoffice/artists/edit/{id}', [BOArtistController::class, 'edit'])->name("boArtistEdit");
 Route::post('/bakcoffice/artists/edit-submit/{id}', [BOArtistController::class, 'editSubmit'])->name("boArtistEditSubmit");
 Route::delete('/bakcoffice/artists/delete/{id}', [BOArtistController::class, 'delete'])->name("boArtistDelete");
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

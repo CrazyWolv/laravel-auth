@@ -22,6 +22,14 @@
                 <li class="main-nav-item is-active"><a href="{{ route('addArtist') }}" class="main-nav-link">Proposer un artiste</a></li>
                 <li class="main-nav-item"><a href="category.html" class="main-nav-link">Catégorie</a></li>
                 <li class="main-nav-item"><a href="artiste.html" class="main-nav-link">Artiste</a></li>
+                @if (!Auth::user())
+                <li class="main-nav-item"><a href="{{ route('login') }}" class="main-nav-link">Se connecter</a></li>
+                @else
+                <form action="{{route("logout")}}" method="POST">
+                    @csrf
+                    <button type="submit">se deconnecter</button>
+                </form>
+                @endif
             </ul>
         </nav>
         

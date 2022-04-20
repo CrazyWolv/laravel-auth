@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ArtistController;
@@ -20,7 +21,7 @@ use App\Http\Controllers\Backoffice\ArtistController as BOArtistController;
 Route::get('/', [HomeController::class, 'index']);
 
 // formulaire pour proposer un artiste
-Route::get('/form', [ArtistController::class, 'addArtist'])->name("addArtist");
+Route::get('/form', [ArtistController::class, 'addArtist'])->name("addArtist")->middleware("admin");
 
 // Traitement du formulaire de proposition d'un artiste
 Route::post('/form-submit', [ArtistController::class, 'submitArtist'])->name("submitArtist");
@@ -30,16 +31,14 @@ Route::get('/form-confirm', [ArtistController::class, 'confirmArtist'])->name("c
 
 
 /************* route pour le backoffice *************/
-Route::get('/bakcoffice', function () {
+Route::get('/backoffice', function () {
     return redirect()->route('boArtist');
-});
-Route::get('/bakcoffice/artists/list', [BOArtistController::class, 'list'])->name("boArtist");
-Route::get('/bakcoffice/artists/add', [BOArtistController::class, 'add'])->name("boArtistAdd");
-Route::post('/bakcoffice/artists/add-submit', [BOArtistController::class, 'addSubmit'])->name("boArtistAddSubmit");
-Route::get('/bakcoffice/artists/edit/{id}', [BOArtistController::class, 'edit'])->name("boArtistEdit");
-Route::post('/bakcoffice/artists/edit-submit/{id}', [BOArtistController::class, 'editSubmit'])->name("boArtistEditSubmit");
-Route::delete('/bakcoffice/artists/delete/{id}', [BOArtistController::class, 'delete'])->name("boArtistDelete");
+})->middleware("admin:routeAdmin");
+Route::get('/backoffice/artists/list', [BOArtistController::class, 'list'])->name("boArtist")->middleware("admin:routeAdmin");
+Route::get('/backoffice/artists/add', [BOArtistController::class, 'add'])->name("boArtistAdd")->middleware("admin:routeAdmin");
+Route::post('/backoffice/artists/add-submit', [BOArtistController::class, 'addSubmit'])->name("boArtistAddSubmit")->middleware("admin:routeAdmin");
+Route::get('/backoffice/artists/edit/{id}', [BOArtistController::class, 'edit'])->name("boArtistEdit")->middleware("admin:routeAdmin");
+Route::post('/backoffice/artists/edit-submit/{id}', [BOArtistController::class, 'editSubmit'])->name("boArtistEditSubmit")->middleware("admin:routeAdmin");
+Route::delete('/backoffice/artists/delete/{id}', [BOArtistController::class, 'delete'])->name("boArtistDelete")->middleware("admin:routeAdmin");
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

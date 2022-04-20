@@ -7,6 +7,7 @@ use App\Models\Artist;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
+
 class ArtistController extends Controller
 {
     /**
